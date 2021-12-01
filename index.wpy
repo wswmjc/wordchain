@@ -1,0 +1,991 @@
+<style lang='less'>
+page {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  image {
+    width: 0;
+  }
+}
+.question {
+  background: #87a8fd;
+  width: 100%;
+  height: 100%;
+  .header {
+    padding: 21rpx;
+    display: flex;
+    align-items: center;
+    image {
+      width: 86rpx;
+      height: 86rpx;
+      margin-right: 30rpx;
+    }
+    .check-point {
+      display: inline-block;
+      color: #222;
+      font-size: 42rpx;
+      font-weight: 600;
+      .check-point-text {
+        display: inline-block;
+        margin: 0 1rpx;
+        &.num {
+          margin: 0 10rpx;
+        }
+      }
+    }
+  }
+
+  .main {
+    background: #afc4fc;
+    width: 731rpx;
+    margin: 0 auto;
+    height: 772rpx;
+    border-radius: 5rpx;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    .letter {
+      width: 60rpx;
+      height: 60rpx;
+      border-radius: 5rpx;
+      margin: 3rpx;
+      box-sizing: border-box;
+      text-align: center;
+      font-weight: 600;
+      &.hasBorder {
+        background: #fff;
+        border: 5rpx solid #222;
+        box-shadow: 0rpx 5rpx 0rpx 0rpx #222;
+        line-height: 54rpx;
+      }
+      &.hasKnown {
+        background: #d9dad9;
+      }
+      &.selected {
+        box-shadow: 0 0 0 3rpx #fa2332;
+      }
+      &.hasFilled {
+        background: #fcee14;
+      }
+      &.wrong {
+        color: #fa2332;
+      }
+      &.complete {
+        color: #fff;
+        background: #3163e3;
+      }
+    }
+  }
+
+  .bar {
+    margin: 20rpx auto 10rpx auto;
+    width: 711rpx;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row-reverse;
+    .friend {
+      box-sizing: border-box;
+      width: 216rpx;
+      height: 73rpx;
+      border-radius: 37rpx;
+      border: 5rpx solid #343434;
+      background: #34b464;
+      display: flex;
+      align-items: center;
+      .avatar {
+        box-sizing: border-box;
+        background: #fff;
+        border-radius: 50%;
+        width: 73rpx;
+        height: 73rpx;
+        border:5rpx solid #343434;
+        margin: 0 20rpx 0 -5rpx; 
+        text-align: center;
+        overflow: hidden;
+        image {
+          box-sizing: border-box;
+          width: 73rpx;
+          height: 73rpx;
+        }
+      }
+
+      .over {
+        font-size: 24rpx;
+        color: #222;
+        line-height: 24rpx;
+        font-weight: 600;
+        .diff {
+          margin-bottom: 8rpx;
+        }
+      }
+    }
+    .bar-menu {
+      display: flex;
+      justify-content: space-between;
+      width: 360rpx;
+      image {
+        width: 78rpx;
+        height: 90rpx;
+      }
+      .tip {
+        position: relative; 
+        width: 80rpx;
+        height: 100rpx;
+        padding: 0;
+        background: initial;
+        display: flex;
+        align-items: center;
+        overflow: visible;
+        .tip-out {
+          position: absolute;
+          width: 100%;
+          top: 2rpx;
+        }
+        .tip-in {
+          position: absolute;
+          width: 50rpx;
+          margin: auto;
+          left: 0;
+          top: 18rpx;
+          right: 0;
+        }
+        .tip-count {
+          position: absolute;
+          width: 70rpx;
+          height: 31rpx;
+          font-size: 18rpx;
+          color: #fff;
+          font-weight: bold;
+          line-height: 24rpx;
+          background: #fc6571;
+          border: 5rpx solid #222;
+          border-radius: 16rpx;
+          right: -26rpx;
+          top: 1rpx;
+          text-align: right;
+          box-sizing: border-box;
+          padding-right: 13rpx;
+        }
+      }
+    }
+  }
+
+  .answer {
+    width: 711rpx;
+    margin: 10rpx auto;
+    display: flex;
+    flex-wrap: wrap;
+    .letter {
+      width: 70rpx;
+      height: 70rpx;
+      line-height: 60rpx;
+      border-radius: 5rpx;
+      margin: 5rpx;
+      box-sizing: border-box;
+      text-align: center;
+      background: #fcee14;
+      color: #000;
+      font-weight: 600;
+      border: 5rpx solid #222;
+      box-shadow: 0rpx 5rpx 0rpx 0rpx #222;
+      &.filled {
+        visibility: hidden;
+      }
+    }
+  }
+
+  .reset-mask {
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    position: fixed;
+    top: 0;
+    left: 0;
+    .reset-confirm {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      margin: auto;
+      box-sizing: border-box;
+      width: 565rpx;
+      height: 399rpx;
+      border-radius: 30rpx;
+      border: 8rpx solid #fff;
+      background: #5367fc;
+      .content {
+        font-size: 46rpx;
+        width: 100%;
+        text-align: center;
+        margin: 82rpx auto 75rpx auto;
+        color: #fff;
+      }
+      .button-bar {
+        width: 505rpx;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        image {
+          width: 238rpx;
+        }
+      }
+    }
+  }
+
+  .how-mask {
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    position: fixed;
+    top: 0;
+    left: 0;
+    .help {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      margin: auto;
+      box-sizing: border-box;
+      width: 668rpx;
+      height: 964rpx;
+      border-radius: 20rpx;
+      border: 6rpx solid #fff;
+      background: #5367fc;
+      .close {
+        box-sizing: border-box;
+        width: 62rpx;
+        position: absolute;
+        top:30rpx;
+        right: 30rpx;
+      }
+      .title {
+        width: 100%;
+        text-align: center;
+        font-size: 68rpx;
+        line-height: 53rpx;
+        color: #fff;
+        margin: 40rpx auto 37rpx auto;
+      }
+      .help-swiper {
+        .swiper-contain{
+          height: 790rpx;
+          box-sizing: border-box;
+          swiper-item{
+            text-align: center;
+            .help-image {
+              width: 598rpx;
+              height: 450rpx;
+              margin-bottom:46rpx; 
+              box-sizing: border-box;
+            }
+            .help-tip {
+              width: 598rpx;
+              font-size: 30rpx;
+              color: #222;
+              background: #afc3fc;
+              border-radius: 20rpx;
+              box-sizing: border-box;
+              display: flex;
+              height: 141rpx;
+              align-items: center;
+              text-align: left;
+              margin: 0 auto;
+              justify-content: center;
+              text {
+                max-width: 542rpx;
+              }
+            }
+          } 
+        }
+        .dot-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 520rpx;
+            margin: auto;
+            bottom: 30rpx;
+            left: 0;
+            right: 0;
+            position: absolute;
+            .arrow-image {
+              width: 85rpx;
+            }
+            .dot-list {
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              width: 260rpx;
+              .dot {
+                border: 3rpx solid #222;
+                background: #fff;
+                width: 22rpx;
+                height: 22rpx;
+                border-radius: 50%;
+                box-sizing: border-box;
+                &.active {
+                  background: #35b564;
+                }
+              }
+            }
+          }
+      }
+    }
+  }
+}
+</style>
+<style scoped>
+
+@keyframes shake {
+  0% {
+        transform: scale(1);
+        transform: scale(1)
+    }
+
+    10%,20% {
+        transform: scale(0.9) rotate(-3deg);
+        transform: scale(0.9) rotate(-3deg)
+    }
+
+    30%,50%,70%,90% {
+        transform: scale(1.1) rotate(3deg);
+        transform: scale(1.1) rotate(3deg)
+    }
+
+    40%,60%,80% {
+        transform: scale(1.1) rotate(-3deg);
+        transform: scale(1.1) rotate(-3deg)
+    }
+
+    100% {
+        transform: scale(1) rotate(0);
+        transform: scale(1) rotate(0)
+    }
+}
+
+.shake-tip{
+  animation: shake 2s both infinite;
+}
+</style>
+<!--  -->
+<template>
+  <view class="question" catchtouchmove="return">
+    <view class="header">
+      <image src="../../img/question/home.png" mode="scaleToFill"/>
+      <view class="check-point">
+        <view class="check-point-text">第</view>
+        <view class="check-point-text num">{{rankNum}}</view>
+        <view class="check-point-text">关</view>
+      </view>
+    </view>
+    <view class="main">
+      <block wx:for="{{question}}">
+        <block wx:for="{{item}}">
+          <view
+            class="letter{{item.isBlank ? '' : ' hasBorder'}}{{item.isKnown ? ' hasKnown' : ''}}{{item.index[0]==selectedBlank[0]&&item.index[1]==selectedBlank[1]?' selected':''}}{{item.fillIndex != -1 ? ' hasFilled' : ''}}{{item.isComplete ? '' : (item.isWrong ? ' wrong' : '')}}{{item.isComplete ? ' complete' : ''}}"
+            @tap="ClickLetter({{item}})"
+          >{{item.content}}</view>
+        </block>
+      </block>
+    </view>
+    <view class="answer">
+      <block wx:for="{{letters}}">
+        <view
+          class="letter{{item.isFilled ? ' filled':''}}"
+          @tap="FillLetter({{item}})"
+        >{{item.letter}}</view>
+      </block>
+    </view>
+    <view class="reset-mask" wx:if="{{resetConfirm}}">
+      <view class="reset-confirm">
+        <view class="content">
+          确定重玩本关吗？
+        </view>
+        <view class="button-bar">
+          <image src="../../img/cancel.png" mode="widthFix" @tap="CancelReset"/>
+          <image src="../../img/confirm.png" mode="widthFix"  @tap="ResetGame"/>
+        </view>
+      </view>
+    </view>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+import gameapi from '../../lib/game'
+import wordapi from '../../lib/word'
+import indexapi from '../../lib/index'
+import utils from '../../utils'
+import gameaudio from '../../utils/gameaudio.js'
+
+const MAX_SHARE_TIME = 6
+export default class Index extends wepy.page {
+  config = {
+    navigationBarTitleText: '成语小状元',
+    navigationBarTextStyle: 'black',
+    navigationBarBackgroundColor: '#fff'
+  }
+
+  data = {
+    rankNum: 1,
+    resetQuestion: [],
+    question: [],
+    selectedBlank: [-1, -1],
+    resetLetters: [],
+    letters: [],
+    answers: [],
+    nextFriend: {
+      avatar:'',
+      diffRank: 0
+    },
+    level: 0,
+    resetConfirm: false,
+    helpOpen: false,
+    currentSwiper: 0,
+    maxSwiper: 4,
+    hasTipTime: 0,
+    maxTipTime: MAX_SHARE_TIME
+  }
+
+  components = {}
+
+  EqualIndex(index1, index2) {
+    if (!(Array.isArray(index1) && Array.isArray(index2) && index1.length === 2 && index2.length === 2)) {
+      // 非法参数已不等处理
+      return false
+    }
+    return index1[0] === index2[0] && index1[1] === index2[1]
+  }
+
+  // ComputedLetterClass(letter) {
+  //   let base = 'letter'
+  //   let hasBorder = letter.isBlank ? '' : 'hasBorder'
+  //   let hasKnown = letter.isKnown ? 'hasKnown' : ''
+  //   let selected = this.EqualIndex(letter.index, this.selectedBlank) && letter.isBlank === false && letter.content === '' ? 'selected' : ''
+  //   let hasFilled = letter.fillIndex !== -1 ? 'hasFilled' : ''
+  //   let isWrong = letter.isComplete ? '' : (letter.isWrong ? 'wrong' : '')
+  //   let isComplete = letter.isComplete ? 'complete' : ''
+  //   return [base, hasBorder, hasKnown, selected, hasFilled, isWrong, isComplete].join(' ')
+  // }
+
+  // ComputedFillLetterClass(letter) {
+  //   let base = 'letter'
+  //   let hasFilled = letter.isFilled ? 'filled' : ''
+  //   return [base, hasFilled].join(' ')
+  // }
+
+  // 重置填入的字母 只有非完成状态才可成功
+  ResetLetter(letter) {
+    this.question[letter.index[0]][letter.index[1]].content = ''
+    this.letters[letter.fillIndex].isFilled = false
+    this.question[letter.index[0]][letter.index[1]].fillIndex = -1
+    this.$apply()
+  }
+
+  // 检测结果是否有单词填写完成 采用先Y轴 后X轴方式检测
+  CheckAnswer() {
+    let startX, startY, endX, endY
+    let x = this.selectedBlank[0], y = this.selectedBlank[1]
+    let xHasUnAnswered = false, xHasWrongAnswer = false, yHasUnAnswered = false, yHasWrongAnswer = false
+    while (y >= 0 && !this.question[x][y].isBlank) {
+      if (this.question[x][y].isQuestion && this.question[x][y].content === '') {
+        yHasUnAnswered = true
+      }
+      if (this.question[x][y].isQuestion
+        && this.question[x][y].content !== ''
+        && this.question[x][y].content !== this.question[x][y].answer) {
+        yHasWrongAnswer = true
+      }
+      y--
+    }
+    startY = y + 1
+    y = this.selectedBlank[1]
+    while (y < 11 && !this.question[x][y].isBlank) {
+      if (this.question[x][y].isQuestion && this.question[x][y].content === '') {
+        yHasUnAnswered = true
+      }
+      if (this.question[x][y].isQuestion
+        && this.question[x][y].content !== ''
+        && this.question[x][y].content !== this.question[x][y].answer) {
+        yHasWrongAnswer = true
+      }
+      y++
+    }
+    endY = y - 1
+
+    //check y
+    y = this.selectedBlank[1]
+    while (x >= 0 && !this.question[x][y].isBlank) {
+      if (this.question[x][y].isQuestion && this.question[x][y].content === '') {
+        xHasUnAnswered = true
+      }
+      if (this.question[x][y].isQuestion
+        && this.question[x][y].content !== ''
+        && this.question[x][y].content !== this.question[x][y].answer) {
+        xHasWrongAnswer = true
+      }
+      x--
+    }
+    startX = x + 1
+
+    x = this.selectedBlank[0]
+    while (x < 11 && !this.question[x][y].isBlank) {
+      if (this.question[x][y].isQuestion && this.question[x][y].content === '') {
+        xHasUnAnswered = true
+      }
+      if (this.question[x][y].isQuestion
+        && this.question[x][y].content !== ''
+        && this.question[x][y].content !== this.question[x][y].answer) {
+        xHasWrongAnswer = true
+      }
+      x++
+    }
+    endX = x - 1
+
+    let beforeWrong = []
+    let hasWrong = false
+    let hasComplete = false
+    if (endX > startX) {
+      if (!xHasUnAnswered) {
+        if (xHasWrongAnswer) {
+          for (let i = startX; i <= endX; i++) {
+            if (this.question[i][this.selectedBlank[1]].isQuestion) {
+              this.question[i][this.selectedBlank[1]].isWrong = true
+              beforeWrong.push([i, this.selectedBlank[1]])
+            }
+          }
+          hasWrong = true
+        } else {
+          for (let i = startX; i <= endX; i++) {
+            this.question[i][this.selectedBlank[1]].isComplete = true
+          }
+          hasComplete = true
+        }
+      } else {
+        for (let i = startX; i <= endX; i++) {
+          if (this.question[i][this.selectedBlank[1]].isQuestion) {
+            this.question[i][this.selectedBlank[1]].isWrong = false
+          }
+        }
+      }
+    }
+
+    if (endY > startY) {
+      if (!yHasUnAnswered) {
+        if (yHasWrongAnswer) {
+          for (let i = startY; i <= endY; i++) {
+            if (this.question[this.selectedBlank[0]][i].isQuestion) {
+              this.question[this.selectedBlank[0]][i].isWrong = true
+            }
+          }
+          hasWrong = true
+        } else {
+          for (let i = startY; i <= endY; i++) {
+            this.question[this.selectedBlank[0]][i].isComplete = true
+          }
+          hasComplete = true
+        }
+      } else {
+        for (let i = startY; i <= endY; i++) {
+          if (this.question[this.selectedBlank[0]][i].isQuestion && !beforeWrong.some(item => {
+            if (this.selectedBlank[0] === item[0] && i === item[1]) {
+              return true
+            }
+          })) {
+            this.question[this.selectedBlank[0]][i].isWrong = false
+          }
+        }
+      }
+    }
+
+    this.$apply()
+    if (hasComplete) {
+      gameaudio.CompleteCorrect()
+    } else if (hasWrong) {
+      gameaudio.CompleteWrong()
+    }
+    return hasWrong
+  }
+
+  // 选择游戏方格 只有填空位置可以被选中
+  SelectLetter(letter, isAuto = false) {
+    this.selectedBlank = letter.isQuestion ? letter.index.slice(0) : [-1, -1]
+    if (letter.isQuestion && !isAuto) {
+      gameaudio.SelectBlank()
+    }
+    this.$apply()
+  }
+
+  // 填完游戏后查询下一个填空位置， 如果找不到说明填写完成
+  FocusNextBlank() {
+    let x = this.selectedBlank[0], y = this.selectedBlank[1]
+    let hasFindFocus = false
+    while (y >= 0 && !this.question[x][y].isBlank) {
+      if (this.question[x][y].isQuestion && this.question[x][y].content === '') {
+        hasFindFocus = true
+        this.SelectLetter(this.question[x][y], true)
+        break
+      }
+      y--
+    }
+    if (hasFindFocus) {
+      return
+    }
+    y = this.selectedBlank[1]
+    while (y < 11 && !this.question[x][y].isBlank) {
+      if (this.question[x][y].isQuestion && this.question[x][y].content === '') {
+        hasFindFocus = true
+        this.SelectLetter(this.question[x][y], true)
+        break
+      }
+      y++
+    }
+    if (hasFindFocus) {
+      return
+    }
+    //check y
+    y = this.selectedBlank[1]
+    while (x >= 0 && !this.question[x][y].isBlank) {
+      if (this.question[x][y].isQuestion && this.question[x][y].content === '') {
+        hasFindFocus = true
+        this.SelectLetter(this.question[x][y], true)
+        break
+      }
+      x--
+    }
+
+    if (hasFindFocus) {
+      return
+    }
+    x = this.selectedBlank[0]
+    while (x < 11 && !this.question[x][y].isBlank) {
+      if (this.question[x][y].isQuestion && this.question[x][y].content === '') {
+        hasFindFocus = true
+        this.SelectLetter(this.question[x][y], true)
+        break
+      }
+      x++
+    }
+    if (hasFindFocus) {
+      return
+    }
+    this.question.some(line => {
+      return line.some(item => {
+        if (item.isQuestion && item.content === '') {
+          this.SelectLetter(item, true)
+          hasFindFocus = true
+          return true
+        }
+      })
+    })
+
+    if (hasFindFocus == false) {
+      this.selectedBlank = [-1, -1]
+      // 成功
+      this.CheckSuccess()
+    }
+    this.$apply()
+  }
+
+  // 填单词逻辑
+  FillLetterOut(letter) {
+    if (!this.EqualIndex(this.selectedBlank, [-1, -1])) {
+      gameaudio.FillBlank()
+      let questionItem = this.question[this.selectedBlank[0]][this.selectedBlank[1]]
+      if (questionItem.fillIndex !== -1) {
+        this.letters[questionItem.fillIndex].isFilled = false
+      }
+      this.question[this.selectedBlank[0]][this.selectedBlank[1]].content = letter.letter
+      this.question[this.selectedBlank[0]][this.selectedBlank[1]].fillIndex = letter.index
+      this.letters[letter.index].isFilled = true
+      if(this.CheckAnswer() !== true) {
+        this.FocusNextBlank()
+      }
+      this.$apply()
+    }
+  }
+
+  // 检测游戏是否完成
+  CheckSuccess() {
+    let hasError = this.question.some(line => {
+      return line.some(item => {
+        if (item.isQuestion && item.content !== '' && item.content !== item.answer) {
+          return true
+        }
+      })
+    })
+    if (hasError === false) {
+      this.ToComplete()
+    }
+  }
+  
+  // 完成答题跳转
+  ToComplete() {
+    gameapi.CheckGame({
+      uid: utils.Store.$Get('uid'),
+      level: this.rankNum,
+      result: JSON.stringify(this.question.map(row => {
+        return row.map(item => {
+          if(item.isBlank) {
+            return {
+              f:0
+            }
+          } else {
+            return {
+              f:1,
+              c: item.content,
+              a: item.answer
+            }
+          }
+        })
+      }))
+    }).then(result => {
+      if (result.status === 1) {
+        this.InitGame()
+        this.$apply()
+        // 跳转
+      }
+    })
+  }
+
+  // 重置游戏
+  ResetGame() {
+    this.question = JSON.parse(JSON.stringify(this.resetQuestion))
+    this.letters = JSON.parse(JSON.stringify(this.resetLetters))
+    this.selectedBlank = [-1,-1]
+    this.$apply()
+  }
+
+  // 提示分享帮填
+  HelpFillLetter() {
+    if (!this.EqualIndex(this.selectedBlank, [-1, -1])) {
+      gameaudio.FillBlank()
+      let questionItem = this.question[this.selectedBlank[0]][this.selectedBlank[1]]
+      if (questionItem.fillIndex !== -1) {
+        this.letters[questionItem.fillIndex].isFilled = false
+      }
+      let letter = this.letters.find(item => {
+        return item.letter === questionItem.answer
+      })
+      this.question[this.selectedBlank[0]][this.selectedBlank[1]].content = letter.letter
+      this.question[this.selectedBlank[0]][this.selectedBlank[1]].fillIndex = letter.index
+      this.letters[letter.index].isFilled = true
+      if(this.CheckAnswer() !== true) {
+        this.FocusNextBlank()
+      }
+      this.$apply()
+    }
+  }
+
+  InitGame() {
+    this.data = {
+      rankNum: 0,
+      resetQuestion: [],
+      question: [],
+      selectedBlank: [-1, -1],
+      resetLetters: [],
+      letters: [],
+      answers: [],
+      nextFriend: {
+        avatar:'',
+        diffRank: 0
+      },
+      level: 0,
+      resetConfirm: false,
+      helpOpen: false,
+      currentSwiper: 0,
+      maxSwiper: 4
+    }
+    this.$apply()
+  }
+
+  GetWord(word) {
+    wordapi.GetWordInfo(word).then(result => {
+        this.openDetail = true
+        this.detailWord = {
+          word: result.data.word,
+          phonetic: result.data.usphonetic,
+          mean: result.data.mean
+        }
+        this.$apply()
+    })
+    wordapi.GetWordSentence(word).then(result => {
+      if(!(Array.isArray(result) && result.length === 0)){
+        this.wordSentence = {
+          word: result.data.word,
+          en: result.data.example_sentence_en,
+          ch: result.data.example_sentence_cn
+        }
+        this.$apply()
+      }
+    })
+  }
+
+  PreLoadAnswer() {
+    let letterList = []
+    let wordList = []
+    Promise.all(this.answers.split(',').map(answer => {
+      return wordapi.GetWordSentence(answer)
+    })).then(results => {
+      letterList = results.map(result => {
+        return {
+          cn: result.data.example_sentence_cn,
+          en: result.data.example_sentence_en,
+          word: result.data.word
+        }
+      })
+      utils.Store.$CacheSet('LetterList', letterList)
+    })
+    Promise.all(this.answers.split(',').map(answer => {
+      return wordapi.GetWordInfo(answer)
+    })).then(results => {
+      wordList = results.map(result => {
+        return {
+          word: result.data.word,
+          phonetic: result.data.usphonetic,
+          mean: result.data.meaning
+        }
+      })
+      utils.Store.$CacheSet('WordList', wordList)
+    })
+  }
+
+  ShareTip(uid) {
+    indexapi.TipShare(uid).then(result => {
+      if (result.status == 1) {
+        this.hasTipTime++
+        this.HelpFillLetter()
+        this.$apply()
+      }
+    })
+  }
+
+  methods = {
+    ClickLetter(letter) {
+      if (letter.isComplete) {
+        return
+      }
+      this.SelectLetter(letter)
+      // 由于错误回退需要验证单词内容有空位 因此放在checkanswer上面
+      if (letter.fillIndex !== -1) {
+        this.ResetLetter(letter)
+      }
+      if (letter.isWrong) {
+        this.CheckAnswer()
+      }
+    },
+    FillLetter(letter) {
+      this.FillLetterOut(letter)
+    },
+    ResetGame() {
+      gameaudio.CommonClick()
+      this.ResetGame()
+      this.resetConfirm = false
+    },
+    ResetGameRequest() {
+      gameaudio.CommonClick()
+      this.resetConfirm = true
+    },
+    CancelReset() {
+      gameaudio.CommonClick()
+      this.resetConfirm = false
+    },
+    GetTip() {
+      gameaudio.CommonClick()
+      // 需要分享
+      // this.HelpFillLetter()
+    },
+    OpenHelp() {
+      gameaudio.CommonClick()
+      this.helpOpen = true
+    },
+    CloseHelp() {
+      gameaudio.CommonClick()
+      this.helpOpen = false
+      this.currentSwiper = 0
+    },
+    SwiperChange(e) {
+      gameaudio.CommonClick()
+      this.currentSwiper = e.detail.current
+    },
+    SubSwiper() {
+      gameaudio.CommonClick()
+      if (this.currentSwiper > 0) {
+        this.currentSwiper--
+      }
+    },
+    AddSwiper() {
+      gameaudio.CommonClick()
+      if (this.currentSwiper < this.maxSwiper) {
+        this.currentSwiper++
+      }
+    }
+  }
+
+  events = {}
+
+  watch = {}
+
+  computed = {}
+
+  onLoad(options) {
+    if (!!options.from_uid) {
+      utils.Store.$Set('fromUid', options.from_uid)
+    } else {
+      utils.Store.$Set('fromUid', null)
+    }
+
+    // 添加分享
+    wx.showShareMenu({
+      withShareTicket: true
+    })
+
+    gameapi.GetGame(options.uid).then(result=>{
+      let data = result.data
+      let init_select = true
+      this.question = JSON.parse(data.desc).map((line, row) => {
+        return line.map((item, column) => {
+          if (init_select && item.f === 1 && item.c === '') {
+            this.selectedBlank = [row, column]
+            init_select = false
+          }
+          return {
+            isBlank: item.f === 0,
+            isKnown: item.f === 1 && item.c !== '',
+            isQuestion: item.f === 1 && item.c === '',
+            content: item.f === 0 ? '' : item.c,
+            answer: item.f === 0 ? '' : item.a,
+            index: [row, column],
+            fillIndex: -1,
+            isComplete: false,
+            isWrong: false
+          }
+        })
+      })
+
+      this.resetQuestion = JSON.parse(JSON.stringify(this.question))
+      this.letters = JSON.parse(data.letters).map((item, index) => {
+        return {
+          letter: item,
+          index: index,
+          isFilled: false
+        }
+      })
+      this.resetLetters = JSON.parse(JSON.stringify(this.letters))
+      this.rankNum = data.rank_num
+      this.answers = data.answers
+      this.level = data.level
+      this.nextFriend = {
+        wuid: data.next_friend.wuid,
+        avatar: data.next_friend.avatar,
+        diffRank: parseInt(data.next_friend.level) - parseInt(data.rank_num) + 1
+      }
+      this.hasTipTime = parseInt(data.result_count)
+      this.$apply()
+      this.PreLoadAnswer()
+    })
+  }
+}
+</script>
